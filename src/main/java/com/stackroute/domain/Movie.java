@@ -2,7 +2,6 @@ package com.stackroute.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.text.DecimalFormat;
 
 @Entity
 public class Movie {
@@ -10,10 +9,26 @@ public class Movie {
     @Id
     int id;
     String movieName;
-    String movieGenre;
     String directedBy;
-    int price;
     String rating;
+    String posterURL;
+    int yearOfRelease;
+
+    public String getPosterURL() {
+        return posterURL;
+    }
+
+    public void setPosterURL(String posterURL) {
+        this.posterURL = posterURL;
+    }
+
+    public int getYearOfRelease() {
+        return yearOfRelease;
+    }
+
+    public void setYearOfRelease(int yearOfRelease) {
+        this.yearOfRelease = yearOfRelease;
+    }
 
     public String getRating() {
         return rating;
@@ -33,11 +48,11 @@ public class Movie {
 
     public Movie() {}
 
-    public Movie(int id, String movieName, String movieGenre, int price,String rate,String director) {
+    public Movie(int id, String movieName,String url,int year,String rate,String director) {
         this.id = id;
         this.movieName = movieName;
-        this.movieGenre = movieGenre;
-        this.price = price;
+        this.posterURL = url;
+        this.yearOfRelease = year;
         this.rating = rate;
         this.directedBy = director;
     }
@@ -58,30 +73,15 @@ public class Movie {
         this.movieName = movieName;
     }
 
-    public String getMovieGenre() {
-        return movieGenre;
-    }
-
-    public void setMovieGenre(String movieGenre) {
-        this.movieGenre = movieGenre;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
     @Override
     public String toString() {
         return "Movie{" +
                 "id=" + id +
                 ", movieName='" + movieName + '\'' +
-                ", movieGenre='" + movieGenre + '\'' +
-                ", price=" + price +
-                ", rating=" + rating +
+                ", directedBy='" + directedBy + '\'' +
+                ", rating='" + rating + '\'' +
+                ", posterURL='" + posterURL + '\'' +
+                ", yearOfRelease=" + yearOfRelease +
                 '}';
     }
 }

@@ -15,7 +15,8 @@ public class MovieServiceApplication implements ApplicationListener<ContextRefre
 		SpringApplication.run(MovieServiceApplication.class,args);
 	}
 
-	private MovieRepository movieRepository;
+	MovieRepository movieRepository;
+
 	@Autowired
 	public MovieServiceApplication(MovieRepository movieRepository) {
 		this.movieRepository = movieRepository;
@@ -23,8 +24,8 @@ public class MovieServiceApplication implements ApplicationListener<ContextRefre
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-		movieRepository.save(new Movie(1,"a","b",230,"8.34","d"));
-		movieRepository.save(new Movie(2,"aa","bb",240,"7.45","dd"));
-		movieRepository.save(new Movie(3,"aaa","bbb",250,"2.21","ddd"));
+		movieRepository.save(new Movie(1,"a","b",2017,"8.3","d"));
+		movieRepository.save(new Movie(2,"aa","bb",2018,"7.4","dd"));
+		movieRepository.save(new Movie(3,"aaa","bbb",2018,"2.2","ddd"));
 	}
 }

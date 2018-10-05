@@ -3,6 +3,7 @@ package com.stackroute.controller;
 import com.stackroute.domain.Movie;
 import com.stackroute.exception.MovieAlreadyExistsException;
 import com.stackroute.exception.MovieNotFoundException;
+import com.stackroute.repository.MovieRepository;
 import com.stackroute.service.MovieServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,11 +17,12 @@ import java.util.List;
 public class MovieController {
 
     MovieServices movieServices;
-
+    MovieRepository movieRepository;
 
     @Autowired
-    public MovieController(MovieServices movieServices) {
+    public MovieController(MovieServices movieServices,MovieRepository movieRepository) {
         this.movieServices = movieServices;
+        this.movieRepository = movieRepository;
     }
 
     @PostMapping("add")
@@ -75,14 +77,14 @@ public class MovieController {
 
     @GetMapping("search/{name}")
     public ResponseEntity<?> searchMovie(@PathVariable String name) {
-        ResponseEntity responseEntity = null;
+        ResponseEntity responseEntity;
         try {
             List<Movie> movieList = movieServices.findMovieByName(name);
             if(movieList==null) throw new MovieNotFoundException("movie with this name doesn't exist");
-            responseEntity = new ResponseEntity<>(movieServices.showMovieList(movieList),HttpStatus.OK);
+            responseEntity = new ResponseEntity<List<Movie>>(movieList,HttpStatus.OK);
         }catch(MovieNotFoundException ex) {
-            responseEntity = new ResponseEntity<>("movie with this name doesn't exist",HttpStatus.BAD_REQUEST);
-        }catch(Exception  e) {
+            responseEntity = new ResponseEntity<String>("movie with this name doesn't exist",HttpStatus.CONFLICT);
+        }catch(Exception e) {
             responseEntity = new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
         }
         return responseEntity;

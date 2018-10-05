@@ -1,6 +1,7 @@
 package com.stackroute.service;
 
 import com.stackroute.domain.Movie;
+import com.stackroute.exception.MovieNotFoundException;
 import com.stackroute.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,9 +12,9 @@ import java.util.List;
 @Service
 public class MovieServicesImpl implements MovieServices {
 
+    @Autowired
     MovieRepository movieRepository;
 
-    @Autowired
     public MovieServicesImpl(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
     }
@@ -25,14 +26,8 @@ public class MovieServicesImpl implements MovieServices {
 
     @Override
     public List<Movie> getAllMovies() {
-        List<Movie> list = (List<Movie>) movieRepository.findAll();
+        List<Movie> list = this.movieRepository.findAll();
         return list;
-    }
-
-    @Override
-    public int getMovieId(Movie movie) {
-        if(movieExists(1,0,movie.getMovieName())) return movie.getId();
-        return -1;
     }
 
     @Override
@@ -55,15 +50,9 @@ public class MovieServicesImpl implements MovieServices {
     }
 
     @Override
-    public int getMoviePrice(int movieId) {
-        if(movieExists(0,movieId,"")) return movieRepository.findById(movieId).get().getPrice();
-        System.out.println("there is not such movie");
-        return -1;
-    }
-
-    @Override
     public List<Movie> findMovieByName(String name) {
-        List<Movie> movies=null;
+        List<Movie> movies=new ArrayList<>();
+        if(getAllMovies()==null) System.out.println("empty");
         for(Movie m: getAllMovies()) {
             if(m.getMovieName().compareTo(name)==0) {
                 movies.add(m);
@@ -88,8 +77,9 @@ public class MovieServicesImpl implements MovieServices {
     @Override
     public boolean compMovies(Movie m1, Movie m2) {
         if(m1.getId()==m2.getId() && m1.getMovieName().compareTo(m2.getMovieName())==0
-                && m1.getMovieGenre().compareTo(m2.getMovieGenre())==0 && m1.getPrice()==m2.getPrice()
-                && m1.getRating().compareTo(m2.getRating())==0 && m1.getDirectedBy().compareTo(m2.getDirectedBy())==0) return true;
+                && m1.getPosterURL().compareTo(m2.getPosterURL())==0 && m1.getYearOfRelease()==m2.getYearOfRelease()
+                && m1.getRating().compareTo(m2.getRating())==0
+                && m1.getDirectedBy().compareTo(m2.getDirectedBy())==0) return true;
         return false;
     }
 
@@ -97,12 +87,6 @@ public class MovieServicesImpl implements MovieServices {
     public String getMovieName(int movieId) {
         if(movieExists(0,movieId,"")) return movieRepository.findById(movieId).get().getMovieName();
         return "enter a valid movie id";
-    }
-
-    @Override
-    public String getMovieGenre(int movieId) {
-        if(movieExists(0,movieId,"")) return movieRepository.findById(movieId).get().getMovieGenre();
-        return "movie doesn't exist";
     }
 
     @Override
@@ -123,10 +107,18 @@ public class MovieServicesImpl implements MovieServices {
 
     @Override
     public void updateMovie(int id,Movie movie) {
-        Movie mov = getMovieById(id);
-        mov.setMovieName(movie.getMovieName());
-        mov.setMovieGenre(movie.getMovieGenre());
-        mov.setPrice(movie.getPrice());
-        saveMovie(mov);
+        saveMovie(movie);
     }
+
+//    public Movie findByName(String name) throws MovieNotFoundException {
+//        if(movieRepository.findMovieByName(name) !=null) {
+//
+//            Movie search=movieRepository.findMovieByName(name);
+//            return search;
+//        }
+//        else {
+//            throw new MovieNotFoundException("movie doesn't exist");
+//        }
+//
+//    }
 }
