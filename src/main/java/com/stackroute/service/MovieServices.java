@@ -13,6 +13,7 @@ public interface MovieServices {
     int getMoviePrice(int movieId);
     List<Movie> findMovieByName(String name);
     boolean movieExists(int arg,int id,String name);
+    boolean compMovies(Movie m1,Movie m2);
     String getMovieName(int movieId);
     String getMovieGenre(int movieId);
     String showMovieList(List<Movie> list);

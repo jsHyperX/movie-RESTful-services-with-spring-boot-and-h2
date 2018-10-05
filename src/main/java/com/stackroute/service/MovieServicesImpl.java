@@ -74,6 +74,13 @@ public class MovieServicesImpl implements MovieServices {
     }
 
     @Override
+    public boolean compMovies(Movie m1, Movie m2) {
+        if(m1.getId()==m2.getId() && m1.getMovieName().compareTo(m2.getMovieName())==0
+                && m1.getMovieGenre().compareTo(m2.getMovieGenre())==0 && m1.getPrice()==m2.getPrice()) return true;
+        return false;
+    }
+
+    @Override
     public String getMovieName(int movieId) {
         if(movieExists(0,movieId,"")) return movieRepository.findById(movieId).get().getMovieName();
         return "enter a valid movie id";
