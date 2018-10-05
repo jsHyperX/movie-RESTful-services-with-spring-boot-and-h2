@@ -76,10 +76,11 @@ public class MovieController {
     }
 
     @GetMapping("search/{name}")
+
     public ResponseEntity<?> searchMovie(@PathVariable String name) {
         ResponseEntity responseEntity;
         try {
-            List<Movie> movieList = movieServices.findMovieByName(name);
+            List<Movie> movieList = movieRepository.findBymovieName(name);
             if(movieList==null) throw new MovieNotFoundException("movie with this name doesn't exist");
             responseEntity = new ResponseEntity<List<Movie>>(movieList,HttpStatus.OK);
         }catch(MovieNotFoundException ex) {

@@ -11,7 +11,6 @@ public interface MovieServices {
     String getRatingOfMovie(Movie movie);
     String getDirectorName(Movie movie);
     Movie getMovieById(int movieId);
-    List<Movie> findMovieByName(String name);
     boolean movieExists(int arg,int id,String name);
     boolean compMovies(Movie m1,Movie m2);
     String getMovieName(int movieId);

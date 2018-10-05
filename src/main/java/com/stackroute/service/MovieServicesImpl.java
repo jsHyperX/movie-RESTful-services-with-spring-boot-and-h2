@@ -5,8 +5,6 @@ import com.stackroute.exception.MovieNotFoundException;
 import com.stackroute.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -47,18 +45,6 @@ public class MovieServicesImpl implements MovieServices {
         if(movieExists(0,movieId,"")) return movieRepository.findById(movieId).get();
         System.out.println("please enter a valid movie Id");
         return null;
-    }
-
-    @Override
-    public List<Movie> findMovieByName(String name) {
-        List<Movie> movies=new ArrayList<>();
-        if(getAllMovies()==null) System.out.println("empty");
-        for(Movie m: getAllMovies()) {
-            if(m.getMovieName().compareTo(name)==0) {
-                movies.add(m);
-            }
-        }
-        return movies;
     }
 
     @Override
@@ -110,15 +96,14 @@ public class MovieServicesImpl implements MovieServices {
         saveMovie(movie);
     }
 
-//    public Movie findByName(String name) throws MovieNotFoundException {
-//        if(movieRepository.findMovieByName(name) !=null) {
-//
-//            Movie search=movieRepository.findMovieByName(name);
-//            return search;
-//        }
-//        else {
-//            throw new MovieNotFoundException("movie doesn't exist");
-//        }
-//
-//    }
+    public List<Movie> findMovieByName(String name) throws MovieNotFoundException {
+        if(movieRepository.findBymovieName(name) !=null) {
+            List<Movie> search=movieRepository.findBymovieName(name);
+            return search;
+        }
+        else {
+            throw new MovieNotFoundException("movie doesn't exist");
+        }
+
+    }
 }
