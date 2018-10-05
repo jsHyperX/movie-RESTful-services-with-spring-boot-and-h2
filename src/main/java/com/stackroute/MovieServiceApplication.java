@@ -12,7 +12,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 public class MovieServiceApplication implements ApplicationListener<ContextRefreshedEvent> {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MovieServiceApplication.class, args);
+		SpringApplication.run(MovieServiceApplication.class,args);
 	}
 
 	private MovieRepository movieRepository;
