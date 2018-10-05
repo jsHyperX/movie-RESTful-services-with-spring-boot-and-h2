@@ -12,8 +12,10 @@ public interface MovieServices {
     Movie getMovieById(int movieId);
     int getMoviePrice(int movieId);
     List<Movie> findMovieByName(String name);
+    boolean movieExists(int arg,int id,String name);
     String getMovieName(int movieId);
     String getMovieGenre(int movieId);
+    String showMovieList(List<Movie> list);
     void deleteMovie(int movieId);
     void updateMovie(int id,Movie movie);
 

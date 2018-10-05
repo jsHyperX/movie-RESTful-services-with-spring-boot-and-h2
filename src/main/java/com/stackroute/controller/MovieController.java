@@ -17,6 +17,7 @@ public class MovieController {
 
     MovieServices movieServices;
 
+
     @Autowired
     public MovieController(MovieServices movieServices) {
         this.movieServices = movieServices;
@@ -61,6 +62,24 @@ public class MovieController {
             responseEntity = new ResponseEntity<String>("movie updated successfully",HttpStatus.OK);
         }catch(Exception e) {
             responseEntity = new ResponseEntity<String>(e.getMessage(),HttpStatus.CONFLICT);
+        }
+        return responseEntity;
+    }
+
+    @RequestMapping({"search/{id}","search/{name}"})
+    public ResponseEntity<?> searchMovie(@PathVariable String name,@PathVariable int id) {
+        ResponseEntity responseEntity = null;
+        try {
+            if(name==null) {
+                Movie movie = movieServices.getMovieById(id);
+                responseEntity=new ResponseEntity(movie.toString(),HttpStatus.OK);
+            }
+            else {
+                List<Movie> movieList = movieServices.findMovieByName(name);
+                responseEntity = new ResponseEntity(movieServices.showMovieList(movieList),HttpStatus.OK);
+            }
+        }catch(Exception  e) {
+            responseEntity = new ResponseEntity(e.getMessage(),HttpStatus.CONFLICT);
         }
         return responseEntity;
     }

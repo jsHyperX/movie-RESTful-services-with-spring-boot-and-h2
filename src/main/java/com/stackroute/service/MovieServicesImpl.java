@@ -18,19 +18,6 @@ public class MovieServicesImpl implements MovieServices {
         this.movieRepository = movieRepository;
     }
 
-    public boolean movieExists(int arg,int id,String name) {
-        if(arg==0) {
-            return (movieRepository.findById(id)!=null);
-        }
-        else {
-            for(Movie m: getAllMovies()) {
-                if(m.getMovieName().compareTo(name)==0) return true;
-            }
-        }
-        return false;
-
-    }
-
     @Override
     public void saveMovie(Movie movie) {
         movieRepository.save(movie);
@@ -74,6 +61,19 @@ public class MovieServicesImpl implements MovieServices {
     }
 
     @Override
+    public boolean movieExists(int arg, int id, String name) {
+        if(arg==0) {
+            return (movieRepository.findById(id)!=null);
+        }
+        else {
+            for(Movie m: getAllMovies()) {
+                if(m.getMovieName().compareTo(name)==0) return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public String getMovieName(int movieId) {
         if(movieExists(0,movieId,"")) return movieRepository.findById(movieId).get().getMovieName();
         return "enter a valid movie id";
@@ -83,6 +83,15 @@ public class MovieServicesImpl implements MovieServices {
     public String getMovieGenre(int movieId) {
         if(movieExists(0,movieId,"")) return movieRepository.findById(movieId).get().getMovieGenre();
         return "movie doesn't exist";
+    }
+
+    @Override
+    public String showMovieList(List<Movie> list) {
+        String res="";
+        for(Movie m: list)  {
+            res+=m.toString()+"\n";
+        }
+        return res;
     }
 
     @Override
