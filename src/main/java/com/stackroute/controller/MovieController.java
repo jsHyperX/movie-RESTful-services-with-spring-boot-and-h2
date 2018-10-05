@@ -78,7 +78,10 @@ public class MovieController {
         ResponseEntity responseEntity = null;
         try {
             List<Movie> movieList = movieServices.findMovieByName(name);
+            if(movieList==null) throw new MovieNotFoundException("movie with this name doesn't exist");
             responseEntity = new ResponseEntity<>(movieServices.showMovieList(movieList),HttpStatus.OK);
+        }catch(MovieNotFoundException ex) {
+            responseEntity = new ResponseEntity<>("movie with this name doesn't exist",HttpStatus.BAD_REQUEST);
         }catch(Exception  e) {
             responseEntity = new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
         }

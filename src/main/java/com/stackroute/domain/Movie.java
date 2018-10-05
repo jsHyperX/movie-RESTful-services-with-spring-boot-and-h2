@@ -10,15 +10,35 @@ public class Movie {
     int id;
     String movieName;
     String movieGenre;
+    String directedBy;
     int price;
+    float rating;
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+    public String getDirectedBy() {
+        return directedBy;
+    }
+
+    public void setDirectedBy(String directedBy) {
+        this.directedBy = directedBy;
+    }
 
     public Movie() {}
 
-    public Movie(int id, String movieName, String movieGenre, int price) {
+    public Movie(int id, String movieName, String movieGenre, int price,float rate,String director) {
         this.id = id;
         this.movieName = movieName;
         this.movieGenre = movieGenre;
         this.price = price;
+        this.rating = rate;
+        this.directedBy = director;
     }
 
     public int getId() {
@@ -60,6 +80,7 @@ public class Movie {
                 ", movieName='" + movieName + '\'' +
                 ", movieGenre='" + movieGenre + '\'' +
                 ", price=" + price +
+                ", rating=" + rating +
                 '}';
     }
 }

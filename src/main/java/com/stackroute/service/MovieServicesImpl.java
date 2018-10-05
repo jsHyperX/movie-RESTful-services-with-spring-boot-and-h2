@@ -36,6 +36,18 @@ public class MovieServicesImpl implements MovieServices {
     }
 
     @Override
+    public float getRatingOfMovie(Movie movie) {
+        if(movieExists(1,0,movie.getMovieName())) return movie.getRating();
+        return (float)-1;
+    }
+
+    @Override
+    public String getDirectorName(Movie movie) {
+        if(movieExists(1,0,movie.getMovieName())) return movie.getDirectedBy();
+        return "there is no such movie...stop messing with it";
+    }
+
+    @Override
     public Movie getMovieById(int movieId) {
         if(movieExists(0,movieId,"")) return movieRepository.findById(movieId).get();
         System.out.println("please enter a valid movie Id");
@@ -51,7 +63,7 @@ public class MovieServicesImpl implements MovieServices {
 
     @Override
     public List<Movie> findMovieByName(String name) {
-        List<Movie> movies = new ArrayList<>();
+        List<Movie> movies=null;
         for(Movie m: getAllMovies()) {
             if(m.getMovieName().compareTo(name)==0) {
                 movies.add(m);
@@ -76,7 +88,8 @@ public class MovieServicesImpl implements MovieServices {
     @Override
     public boolean compMovies(Movie m1, Movie m2) {
         if(m1.getId()==m2.getId() && m1.getMovieName().compareTo(m2.getMovieName())==0
-                && m1.getMovieGenre().compareTo(m2.getMovieGenre())==0 && m1.getPrice()==m2.getPrice()) return true;
+                && m1.getMovieGenre().compareTo(m2.getMovieGenre())==0 && m1.getPrice()==m2.getPrice()
+                && m1.getRating()==m2.getRating() && m1.getDirectedBy().compareTo(m2.getDirectedBy())==0) return true;
         return false;
     }
 
