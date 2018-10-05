@@ -2,6 +2,7 @@ package com.stackroute.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.text.DecimalFormat;
 
 @Entity
 public class Movie {
@@ -12,13 +13,13 @@ public class Movie {
     String movieGenre;
     String directedBy;
     int price;
-    float rating;
+    String rating;
 
-    public float getRating() {
+    public String getRating() {
         return rating;
     }
 
-    public void setRating(float rating) {
+    public void setRating(String rating) {
         this.rating = rating;
     }
 
@@ -32,7 +33,7 @@ public class Movie {
 
     public Movie() {}
 
-    public Movie(int id, String movieName, String movieGenre, int price,float rate,String director) {
+    public Movie(int id, String movieName, String movieGenre, int price,String rate,String director) {
         this.id = id;
         this.movieName = movieName;
         this.movieGenre = movieGenre;

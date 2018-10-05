@@ -36,9 +36,9 @@ public class MovieServicesImpl implements MovieServices {
     }
 
     @Override
-    public float getRatingOfMovie(Movie movie) {
+    public String getRatingOfMovie(Movie movie) {
         if(movieExists(1,0,movie.getMovieName())) return movie.getRating();
-        return (float)-1;
+        return "this movie doesn't exist...what do want from me??";
     }
 
     @Override
@@ -89,7 +89,7 @@ public class MovieServicesImpl implements MovieServices {
     public boolean compMovies(Movie m1, Movie m2) {
         if(m1.getId()==m2.getId() && m1.getMovieName().compareTo(m2.getMovieName())==0
                 && m1.getMovieGenre().compareTo(m2.getMovieGenre())==0 && m1.getPrice()==m2.getPrice()
-                && m1.getRating()==m2.getRating() && m1.getDirectedBy().compareTo(m2.getDirectedBy())==0) return true;
+                && m1.getRating().compareTo(m2.getRating())==0 && m1.getDirectedBy().compareTo(m2.getDirectedBy())==0) return true;
         return false;
     }
 

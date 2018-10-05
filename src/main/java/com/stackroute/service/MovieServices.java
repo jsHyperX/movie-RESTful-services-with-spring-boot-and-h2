@@ -9,7 +9,7 @@ public interface MovieServices {
     void saveMovie(Movie movie);
     List<Movie> getAllMovies();
     int getMovieId(Movie movie);
-    float getRatingOfMovie(Movie movie);
+    String getRatingOfMovie(Movie movie);
     String getDirectorName(Movie movie);
     Movie getMovieById(int movieId);
     int getMoviePrice(int movieId);
