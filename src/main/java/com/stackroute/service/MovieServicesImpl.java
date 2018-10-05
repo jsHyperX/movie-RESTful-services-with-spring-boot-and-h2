@@ -18,6 +18,18 @@ public class MovieServicesImpl implements MovieServices {
         this.movieRepository = movieRepository;
     }
 
+    public boolean movieExists(int arg,int id,String name) {
+        if(arg==0) {
+            return (movieRepository.findById(id)!=null);
+        }
+        else {
+            for(Movie m: getAllMovies()) {
+                if(m.getMovieName().compareTo(name)==0) return true;
+            }
+        }
+        return false;
+
+    }
     @Override
     public void saveMovie(Movie movie) {
         movieRepository.save(movie);
@@ -31,17 +43,22 @@ public class MovieServicesImpl implements MovieServices {
 
     @Override
     public int getMovieId(Movie movie) {
-        return movie.getId();
+        if(movieExists(1,0,movie.getMovieName())) return movie.getId();
+        return -1;
     }
 
     @Override
     public Movie getMovieById(int movieId) {
-        return movieRepository.findById(movieId).get();
+        if(movieExists(0,movieId,"")) return movieRepository.findById(movieId).get();
+        System.out.println("please enter a valid movie Id");
+        return null;
     }
 
     @Override
     public int getMoviePrice(int movieId) {
-        return movieRepository.findById(movieId).get().getPrice();
+        if(movieExists(0,movieId,"")) return movieRepository.findById(movieId).get().getPrice();
+        System.out.println("there is not such movie");
+        return -1;
     }
 
     @Override
@@ -57,17 +74,21 @@ public class MovieServicesImpl implements MovieServices {
 
     @Override
     public String getMovieName(int movieId) {
-        return movieRepository.findById(movieId).get().getMovieName();
+        if(movieExists(0,movieId,"")) return movieRepository.findById(movieId).get().getMovieName();
+        return "enter a valid movie id";
     }
 
     @Override
     public String getMovieGenre(int movieId) {
-        return movieRepository.findById(movieId).get().getMovieGenre();
+        if(movieExists(0,movieId,"")) return movieRepository.findById(movieId).get().getMovieGenre();
+        return "movie doesn't exist";
     }
 
     @Override
     public void deleteMovie(int movieId) {
-        movieRepository.delete(movieRepository.findById(movieId).get());
+        if(movieExists(0,movieId,"")) movieRepository.delete(movieRepository.findById(movieId).get());
+        System.out.println("there is no movie with this ID");
+        return;
     }
 
     @Override
