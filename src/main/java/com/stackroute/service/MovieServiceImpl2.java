@@ -5,19 +5,18 @@ import com.stackroute.exception.MovieNotFoundException;
 import com.stackroute.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
-@Primary
-@Qualifier("impl1")
-public class MovieServicesImpl implements MovieServices {
+@Qualifier("impl2")
+public class MovieServiceImpl2 implements MovieServices{
 
-    @Autowired
     MovieRepository movieRepository;
 
-    public MovieServicesImpl(MovieRepository movieRepository) {
+    @Autowired
+    public MovieServiceImpl2(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
     }
 
@@ -28,8 +27,7 @@ public class MovieServicesImpl implements MovieServices {
 
     @Override
     public List<Movie> getAllMovies() {
-        List<Movie> list = this.movieRepository.findAll();
-        return list;
+        return movieRepository.findAll();
     }
 
     @Override
@@ -100,7 +98,6 @@ public class MovieServicesImpl implements MovieServices {
         saveMovie(movie);
     }
 
-    @Override
     public List<Movie> findMovieByName(String name) throws MovieNotFoundException {
         if(movieRepository.findBymovieName(name) !=null) {
             List<Movie> search=movieRepository.findBymovieName(name);

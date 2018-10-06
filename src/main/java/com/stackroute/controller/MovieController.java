@@ -6,6 +6,7 @@ import com.stackroute.exception.MovieNotFoundException;
 import com.stackroute.repository.MovieRepository;
 import com.stackroute.service.MovieServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class MovieController {
     MovieRepository movieRepository;
 
     @Autowired
-    public MovieController(MovieServices movieServices,MovieRepository movieRepository) {
+    public MovieController(@Qualifier("impl1") MovieServices movieServices, MovieRepository movieRepository) {
         this.movieServices = movieServices;
         this.movieRepository = movieRepository;
     }

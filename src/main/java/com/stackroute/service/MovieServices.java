@@ -1,6 +1,7 @@
 package com.stackroute.service;
 
 import com.stackroute.domain.Movie;
+import com.stackroute.exception.MovieNotFoundException;
 
 import java.util.List;
 
@@ -17,5 +18,5 @@ public interface MovieServices {
     String showMovieList(List<Movie> list);
     void deleteMovie(int movieId);
     void updateMovie(int id,Movie movie);
-
+    List<Movie> findMovieByName(String name) throws MovieNotFoundException;
 }
