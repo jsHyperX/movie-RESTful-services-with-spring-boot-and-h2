@@ -1,17 +1,33 @@
 package com.stackroute.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.CollectionCallback;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+@Document
 public class Movie {
 
     @Id
+    @NotNull
+    @Min(1)
     int id;
+    @Size(min=2,message="movie name should have atleast 2 characters")
+    @NotNull
     String movieName;
+    @Size(min=4,message="director's anme shoudl be atleast 4 characters long")
+    @NotNull
     String directedBy;
+    @Size(message = "the rating should be less than 10 and not more than 2 decimal places")
+    @NotNull
     String rating;
+    @NotNull
     String posterURL;
+    @NotNull
+    @Min(1500)
     int yearOfRelease;
 
     public String getPosterURL() {

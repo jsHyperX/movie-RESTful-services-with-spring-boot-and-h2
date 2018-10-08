@@ -25,8 +25,8 @@ public class MovieServiceApplication implements ApplicationListener<ContextRefre
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-		movieRepository.save(new Movie(1,"a","b",2017,"8.3","d"));
-		movieRepository.save(new Movie(2,"aa","bb",2018,"7.4","dd"));
-		movieRepository.save(new Movie(3,"aaa","bbb",2018,"2.2","ddd"));
+		movieRepository.save(new Movie(1,"saw1","adawdxasdawd",2017,"8.3","ALBAL1"));
+		movieRepository.save(new Movie(2,"saw2","dasdqwdaDSQQAWD",2018,"7.4","albal2"));
+		movieRepository.save(new Movie(3,"saw3","bDASDAdasdaweS",2018,"2.2","albal3"));
 	}
 }

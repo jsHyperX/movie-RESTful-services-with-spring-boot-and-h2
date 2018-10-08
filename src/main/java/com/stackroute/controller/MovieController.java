@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,11 +28,11 @@ public class MovieController {
     }
 
     @PostMapping("add")
-    public ResponseEntity<?> saveMovie(@RequestBody Movie movie) {
+    public ResponseEntity<?> saveMovie(@RequestBody @Valid Movie movie) {
         ResponseEntity responseEntity=null;
         try {
             for(Movie m:movieServices.getAllMovies()) {
-                if(movie.getId()==m.getId()) {
+                if(movieServices.compMovies(movie,m)) {
                     responseEntity = new ResponseEntity<String>("movie already exists",HttpStatus.NOT_ACCEPTABLE);
                     throw new MovieAlreadyExistsException();
                 }
@@ -58,7 +59,7 @@ public class MovieController {
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<?> updateMovie(@RequestBody Movie movie,@PathVariable int id) {
+    public ResponseEntity<?> updateMovie(@RequestBody @Valid Movie movie, @PathVariable int id) {
         ResponseEntity responseEntity;
         try {
             if(movieServices.compMovies(movieServices.getMovieById(id),movie)) {
@@ -115,5 +116,4 @@ public class MovieController {
         }
         return responseEntity;
     }
-
 }

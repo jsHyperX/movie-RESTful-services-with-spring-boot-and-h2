@@ -64,7 +64,7 @@ public class MovieServiceImpl2 implements MovieServices{
 
     @Override
     public boolean compMovies(Movie m1, Movie m2) {
-        if(m1.getId()==m2.getId() && m1.getMovieName().compareTo(m2.getMovieName())==0
+        if(m1.getMovieName().compareTo(m2.getMovieName())==0
                 && m1.getPosterURL().compareTo(m2.getPosterURL())==0 && m1.getYearOfRelease()==m2.getYearOfRelease()
                 && m1.getRating().compareTo(m2.getRating())==0
                 && m1.getDirectedBy().compareTo(m2.getDirectedBy())==0) return true;
