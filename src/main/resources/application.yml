@@ -16,6 +16,10 @@ spring:
 #    hibernate:
 #      ddl-auto: create
 
+
   data:
     mongodb:
+      uri: mongodb://172.23.239.247/mydb
       database: mydb
+      host: 172.23.239.247
+      port: 27017

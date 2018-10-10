@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface MovieRepository extends MongoRepository<Movie,Integer> {
     List<Movie> findBymovieName(String movieName);
 }
