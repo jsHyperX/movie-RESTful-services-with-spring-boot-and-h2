@@ -1,5 +1,6 @@
 spring:
-
+  appilcation:
+    name: movieServe
 #  h2:
 #    console:
 #      enabled: true
@@ -17,9 +18,9 @@ spring:
 #      ddl-auto: create
 
 
-  data:
-    mongodb:
-      uri: mongodb://172.23.239.247/mydb
-      database: mydb
-      host: 172.23.239.247
-      port: 27017
+#  data:
+#    mongodb:
+#      uri: mongodb://172.23.239.247/mydb
+#      database: mydb
+#      host: 172.23.239.247
+#      port: 27017

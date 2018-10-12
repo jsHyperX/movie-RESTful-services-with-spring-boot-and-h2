@@ -6,7 +6,6 @@ import com.stackroute.exception.MovieNotFoundException;
 import com.stackroute.repository.MovieRepository;
 import com.stackroute.service.MovieServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +17,14 @@ import java.util.List;
 @RequestMapping("api/v1")
 public class MovieController {
 
-    MovieServices movieServices;
+    @Autowired
     MovieRepository movieRepository;
 
     @Autowired
-    public MovieController(@Qualifier("impl1") MovieServices movieServices, MovieRepository movieRepository) {
-        this.movieServices = movieServices;
+    MovieServices movieServices;
+
+    @Autowired
+    public MovieController(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
     }
 
@@ -33,7 +34,7 @@ public class MovieController {
         try {
             for(Movie m:movieServices.getAllMovies()) {
                 if(movieServices.compMovies(movie,m)) {
-                    responseEntity = new ResponseEntity<String>("movie already exists",HttpStatus.NOT_ACCEPTABLE);
+                    responseEntity = new ResponseEntity<String>("movie already exists",HttpStatus.CONFLICT);
                     throw new MovieAlreadyExistsException();
                 }
             }
@@ -42,7 +43,7 @@ public class MovieController {
         }catch(MovieAlreadyExistsException ex) {
             System.out.println(ex.getMessage());
         }catch(Exception e) {
-            responseEntity = new ResponseEntity<String>(e.getMessage(), HttpStatus.CONFLICT);
+            responseEntity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return responseEntity;
     }
@@ -78,7 +79,6 @@ public class MovieController {
     }
 
     @GetMapping("search/{name}")
-
     public ResponseEntity<?> searchMovie(@PathVariable String name) {
         ResponseEntity responseEntity;
         try {
@@ -88,7 +88,7 @@ public class MovieController {
         }catch(MovieNotFoundException ex) {
             responseEntity = new ResponseEntity<String>("movie with this name doesn't exist",HttpStatus.CONFLICT);
         }catch(Exception e) {
-            responseEntity = new ResponseEntity<>(e.getMessage(),HttpStatus.CONFLICT);
+            responseEntity = new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
         return responseEntity;
     }
@@ -97,14 +97,9 @@ public class MovieController {
     public ResponseEntity<?> deleteMovie(@PathVariable int id) {
         ResponseEntity responseEntity=null;
         try {
-            boolean found=false;
-            for(Movie m:movieServices.getAllMovies()) {
-                if(id==m.getId()) {
-                    found=true;
-                }
-            }
-            if(!found) {
-                responseEntity = new ResponseEntity<String>("movie doesn't exists",HttpStatus.NOT_ACCEPTABLE);
+            List<Movie> list = movieServices.findMovieByName(String.valueOf(movieRepository.findById(id)));
+            if(list==null) {
+                responseEntity = new ResponseEntity<String>("movie doesn't exists",HttpStatus.CONFLICT);
                 throw new MovieNotFoundException("movie doesn't exist");
             }
             else movieServices.deleteMovie(id);

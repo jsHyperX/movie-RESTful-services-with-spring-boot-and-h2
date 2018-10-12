@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@Primary
-@Qualifier("impl1")
 public class MovieServicesImpl implements MovieServices {
 
     @Autowired
@@ -22,8 +20,9 @@ public class MovieServicesImpl implements MovieServices {
     }
 
     @Override
-    public void saveMovie(Movie movie) {
+    public Movie saveMovie(Movie movie) {
         movieRepository.save(movie);
+        return movie;
     }
 
     @Override
@@ -90,7 +89,9 @@ public class MovieServicesImpl implements MovieServices {
 
     @Override
     public void deleteMovie(int movieId) {
-        if(movieExists(0,movieId,"")) movieRepository.delete(movieRepository.findById(movieId).get());
+        if(movieRepository.existsById(movieId)) {
+            movieRepository.delete(movieRepository.findById(movieId).get());
+        }
         System.out.println("there is no movie with this ID");
         return;
     }
@@ -109,6 +110,5 @@ public class MovieServicesImpl implements MovieServices {
         else {
             throw new MovieNotFoundException("movie doesn't exist");
         }
-
     }
 }

@@ -6,4 +6,11 @@ public class MovieAlreadyExistsException extends Exception {
         super();
     }
 
+    String messge;
+    public MovieAlreadyExistsException(String message) {
+        super(message);
+        this.messge = message;
+
+    }
+
 }

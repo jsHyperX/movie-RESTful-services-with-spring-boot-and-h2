@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MovieServices {
 
-    void saveMovie(Movie movie);
+    Movie saveMovie(Movie movie);
     List<Movie> getAllMovies();
     String getRatingOfMovie(Movie movie);
     String getDirectorName(Movie movie);
